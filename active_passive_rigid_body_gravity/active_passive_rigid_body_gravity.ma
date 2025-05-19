@@ -1,27 +1,28 @@
 //Maya ASCII 2023 scene
 //Name: active_passive_rigid_body_gravity.ma
-//Last modified: Mon, May 19, 2025 08:00:37 PM
+//Last modified: Mon, May 19, 2025 08:14:47 PM
 //Codeset: 1252
 requires maya "2023";
 requires "stereoCamera" "10.0";
-requires -nodeType "aiOptions" -nodeType "aiAOVDriver" -nodeType "aiAOVFilter" "mtoa" "5.2.1.1";
+requires -nodeType "aiOptions" -nodeType "aiAOVDriver" -nodeType "aiAOVFilter" -nodeType "aiSkyDomeLight"
+		 "mtoa" "5.2.1.1";
 currentUnit -l centimeter -a degree -t film;
 fileInfo "application" "maya";
 fileInfo "product" "Maya 2023";
 fileInfo "version" "2023";
 fileInfo "cutIdentifier" "202211021031-847a9f9623";
 fileInfo "osv" "Windows 11 Pro v2009 (Build: 22621)";
-fileInfo "UUID" "4ABB20AA-4FC2-8A81-45AB-4B8AE4E2BBD6";
+fileInfo "UUID" "B4426588-4F7B-D67E-1330-4A8B60EB365D";
 createNode transform -s -n "persp";
 	rename -uid "5F153531-40EA-3544-B16D-5EAE0C620D93";
 	setAttr ".v" no;
-	setAttr ".t" -type "double3" 162.10421080803494 80.332421817798391 162.18846355373009 ;
+	setAttr ".t" -type "double3" 569.70520527817064 261.91960571284528 618.06536736100657 ;
 	setAttr ".r" -type "double3" -16.538352730070155 -678.19999999999845 -2.1332374770057349e-15 ;
 createNode camera -s -n "perspShape" -p "persp";
 	rename -uid "B8E92249-4A96-001B-C9B8-9F810937B2A1";
 	setAttr -k off ".v" no;
 	setAttr ".fl" 34.999999999999993;
-	setAttr ".coi" 243.34831009156184;
+	setAttr ".coi" 881.26384327200253;
 	setAttr ".imn" -type "string" "persp";
 	setAttr ".den" -type "string" "persp_depth";
 	setAttr ".man" -type "string" "persp_mask";
@@ -92,10 +93,10 @@ createNode mesh -n "pSphereShape1" -p "pSphere1";
 createNode rigidBody -n "rigidBody1" -p "pSphere1";
 	rename -uid "FB9B9AFA-4F1E-B82C-D26F-FD90DC65FF13";
 	setAttr -k off ".v";
-	setAttr ".ip" -type "double3" -0.85504281183048503 1.8024917622543821 -90.084393773293314 ;
+	setAttr ".ip" -type "double3" -0.85504281183048503 1.8024917622543821 -210.09188297253388 ;
 	setAttr ".ior" -type "double3" 58.758129692516079 -1.7781117717897612e-05 6.2979953132921297e-05 ;
-	setAttr ".iv" -type "double3" 0 0 55 ;
-	setAttr ".is" -type "double3" 0 0 20 ;
+	setAttr ".iv" -type "double3" 0 0 555 ;
+	setAttr ".is" -type "double3" 0 0 55 ;
 	setAttr ".igc" 1;
 	setAttr ".sid" 0;
 createNode transform -n "pPlane1";
@@ -9769,6 +9770,15 @@ createNode gravityField -n "gravityField13";
 	setAttr ".amag[0]"  0 1 1;
 	setAttr ".crad[0]"  0 1 1;
 	setAttr ".dy" -1;
+createNode transform -n "aiSkyDomeLight1";
+	rename -uid "7184A49D-45A5-639E-90DE-EABF4A5D6D3B";
+createNode aiSkyDomeLight -n "aiSkyDomeLightShape1" -p "aiSkyDomeLight1";
+	rename -uid "B55D2241-4D0D-45A5-6569-4E954D06EA39";
+	addAttr -ci true -h true -sn "aal" -ln "attributeAliasList" -dt "attributeAlias";
+	setAttr -k off ".v";
+	setAttr ".csh" no;
+	setAttr ".rcsh" no;
+	setAttr ".aal" -type "attributeAlias" {"exposure","aiExposure"} ;
 createNode lightLinker -s -n "lightLinker1";
 	rename -uid "AE778D43-43EA-5E04-91EA-2A99D7C0341F";
 	setAttr -s 2 ".lnk";
@@ -9789,6 +9799,7 @@ createNode renderLayer -n "defaultRenderLayer";
 	setAttr ".g" yes;
 createNode aiOptions -s -n "defaultArnoldRenderOptions";
 	rename -uid "2AB26C74-4A2F-4BFA-A43D-1BBB526618C1";
+	addAttr -ci true -sn "ARV_options" -ln "ARV_options" -dt "string";
 	setAttr ".version" -type "string" "5.2.1.1";
 createNode aiAOVFilter -s -n "defaultArnoldFilter";
 	rename -uid "700BBE87-4563-C1E9-8572-C6A75FDA845B";
@@ -9806,26 +9817,18 @@ createNode polySphere -n "polySphere1";
 createNode rigidSolver -n "rigidSolver";
 	rename -uid "BBD6FD18-4B11-9F84-4D30-A0B662778923";
 	setAttr -s 14 ".gfr";
-	setAttr -s 15 ".t[0:14]" -type "double3" -12.542189707781937 2.088573621166574 
-		5.3020288133467011 -2.0751912978449312 0 -1.2225581615338825 -8.2077517699342089 
-		-1.6725417466803898 53.186483325807167 0 0 0 -10.026122284893098 1.3075813635308431 
-		22.228914433058918 -1.9295417701086333 1.4401906641250888 10.555116741115366 11.653419247644845 
-		1.2853355677888434 33.113130422823765 7.2878820226320942 3.5383492942505343 15.030164767537453 
-		7.0533787087408673 3.2771704821539678 4.8584352428242781 6.1970205977328643 1.7499817589706887 
-		21.358872877329638 -5.1333283936312437 3.4480150263911966 7.2748777886769549 -13.053081948240715 
-		4.3267645210388368 7.3141397748983561 21.346764326294757 1.03496169333788 4.5561227778408382 
-		-1.9959725686732093 3.2403038082186821 10.971438201734156 -3.5015653871069992 1.263956089312551 
-		8.9887257690046507;
+	setAttr -s 15 ".t[0:14]" -type "double3" -0.85504281183048503 1.8024917622543821 
+		-210.09188297253388 -2.0751912978449312 0 -1.2225581615338825 -8.2077517699342089 
+		-1.2345247906813963 53.186483325807167 0 0 0 -3.8181129910316396 0 6.3663468068984486 
+		-1.3182831999814888 0 6.3663468068984486 1.7450715599549982 0 6.3663468068984486 
+		4.1502786864693881 0 6.3663468068984486 3.5386319225606875 0 3.9213188528886906 0.89736851038324206 
+		0 3.9213188528886906 -2.6964935527311127 0 3.9213188528886906 -2.6964935527311127 
+		0 1.5442111159081051 1.9441385124270616 0 1.5442111159081051 0 0 2.457514658519357 
+		0 0 0;
 	setAttr -s 14 ".t";
-	setAttr -s 15 ".r[0:14]" -type "double3" 174.89280069730339 34.666565415802985 
-		494.25748171245573 0 0 0 -3.7728878523923494e-17 4.3996576541007952e-18 2.419072674393546e-17 
-		0 0 0 -80.064685250577355 -41.991082405133241 -26.182726332225204 97.429883138838434 
-		-21.520333213921948 3.6356600889429798 -231.20966736903324 18.781810874387677 -461.03107845353776 
-		-300.10878588009621 10.556379986289528 204.21608181701416 50.011579384127764 -18.736512349556648 
-		-157.73767459613265 -82.051977038931454 18.164420557092321 -301.99692731787383 102.327875407246 
-		-47.772116199119559 28.862211806687114 56.833084850441097 32.201490212705878 210.32213867147141 
-		-8.0401710104635242 77.15361455937871 -276.99345622277656 -18.238001684931845 58.560832477268988 
-		224.13252133744663 -131.52443559779323 72.419240068377803 130.85650920284164;
+	setAttr -s 15 ".r[0:14]" -type "double3" 58.758129692516079 -1.7781117717897612e-05 
+		6.2979953132921297e-05 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 
+		0 0 0 0 0 0 0 0 0 0 0 0 0;
 	setAttr -s 14 ".r";
 	setAttr ".cur" yes;
 createNode choice -n "rigidBody_tx";
@@ -9842,7 +9845,7 @@ createNode choice -n "rigidBody_tz";
 	rename -uid "1CBC061A-4201-11DC-0121-BC8BC646A4FD";
 	setAttr ".ihi" 0;
 	setAttr -s 2 ".i";
-	setAttr ".i[1]" -90.084393773293314;
+	setAttr ".i[1]" -210.09188297253388;
 createNode choice -n "rigidBody_rx";
 	rename -uid "AE0B891A-4BE8-96FD-E6C9-6195E06F4320";
 	setAttr ".ihi" 0;
@@ -10317,8 +10320,7 @@ createNode script -n "sceneConfigurationScriptNode";
 	setAttr ".b" -type "string" "playbackOptions -min 0 -max 200 -ast 0 -aet 200 ";
 	setAttr ".st" 6;
 select -ne :time1;
-	setAttr ".o" 148;
-	setAttr ".unw" 148;
+	setAttr ".o" 0;
 select -ne :hardwareRenderingGlobals;
 	setAttr ".otfna" -type "stringArray" 22 "NURBS Curves" "NURBS Surfaces" "Polygons" "Subdiv Surface" "Particles" "Particle Instance" "Fluids" "Strokes" "Image Planes" "UI" "Lights" "Cameras" "Locators" "Joints" "IK Handles" "Deformers" "Motion Trails" "Components" "Hair Systems" "Follicles" "Misc. UI" "Ornaments"  ;
 	setAttr ".otfva" -type "Int32Array" 22 0 1 1 1 1 1
@@ -10333,6 +10335,7 @@ select -ne :defaultShaderList1;
 select -ne :postProcessList1;
 	setAttr -s 2 ".p";
 select -ne :defaultRenderingList1;
+select -ne :lightList1;
 select -ne :initialShadingGroup;
 	setAttr -s 14 ".dsm";
 	setAttr ".ro" yes;
@@ -10344,6 +10347,7 @@ select -ne :defaultRenderGlobals;
 	setAttr ".dss" -type "string" "lambert1";
 select -ne :defaultResolution;
 	setAttr ".pa" 1;
+select -ne :defaultLightSet;
 select -ne :defaultColorMgtGlobals;
 	setAttr ".cfe" yes;
 	setAttr ".cfp" -type "string" "<MAYA_RESOURCES>/OCIO-configs/Maya2022-default/config.ocio";
@@ -10712,6 +10716,7 @@ connectAttr "rigidSolver.r[14].ry" "rigidBody_ry13.i[0]";
 connectAttr "rigidBody14.chc" "rigidBody_rz13.s";
 connectAttr "rigidSolver.r[14].rz" "rigidBody_rz13.i[0]";
 connectAttr "defaultRenderLayer.msg" ":defaultRenderingList1.r" -na;
+connectAttr "aiSkyDomeLightShape1.ltd" ":lightList1.l" -na;
 connectAttr "pSphereShape1.iog" ":initialShadingGroup.dsm" -na;
 connectAttr "pPlaneShape1.iog" ":initialShadingGroup.dsm" -na;
 connectAttr "revolvedSurfaceShape1.iog" ":initialShadingGroup.dsm" -na;
@@ -10726,4 +10731,5 @@ connectAttr "revolvedSurfaceShape9.iog" ":initialShadingGroup.dsm" -na;
 connectAttr "revolvedSurfaceShape10.iog" ":initialShadingGroup.dsm" -na;
 connectAttr "revolvedSurfaceShape11.iog" ":initialShadingGroup.dsm" -na;
 connectAttr "revolvedSurfaceShape12.iog" ":initialShadingGroup.dsm" -na;
+connectAttr "aiSkyDomeLight1.iog" ":defaultLightSet.dsm" -na;
 // End of active_passive_rigid_body_gravity.ma
